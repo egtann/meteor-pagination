@@ -3,7 +3,7 @@ Package.describe({
 });
 
 Package.on_use(function (api, where) {
-  api.add_files('pagination_client.js', 'client');
+  api.add_files('pagination.js', 'client');
 });
 
 Package.on_test(function (api) {
