@@ -13,9 +13,9 @@ Pagination.create(prependRoute, collectionCount, currentPage, resultsPerPage);
 
 It's smart enough to know when not to include Previous and Next links, to append a trailing slash to the prepended route when necessary, and to determine the total number of pages.
 
-### Using this with a router
+### Demonstration
 
-For demonstration, I'll be hooking this up to [router-with-notifications](https://github.com/egtann/meteor-router), but it should work similarly with any other router.
+I'll be hooking this up to [router-with-notifications](https://github.com/egtann/meteor-router) to keep track of the current page, but it should work similarly with any other router.
 
 ```js
 if (Meteor.isClient) {
@@ -36,7 +36,7 @@ if (Meteor.isClient) {
 
 In the template:
 
-```js
+```handlebars
 <template name="browse">
   {{#each people}}
     {{> person}}
