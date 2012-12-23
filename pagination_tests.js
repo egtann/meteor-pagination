@@ -1,14 +1,9 @@
 Tinytest.add("Prev and Next Links", function(test) {
-  test.equal(Pagination.create('/browse', People.find({}).count(), 1, 2),
-             '1 of 4 <a href="/browse/2">Next</a>');
-  test.equal(Pagination.create('/browse/', People.find({}).count(), 1, 2),
-             '1 of 4 <a href="/browse/2">Next</a>');
-  test.equal(Pagination.create('/search/browse', People.find({}).count(), 1, 2),
-             '1 of 4 <a href="/search/browse/2">Next</a>');
-  test.equal(Pagination.create('/browse', People.find({}).count(), 2, 4),
-             '<a href="/browse/1">Prev</a> 2 of 2');
-  test.equal(Pagination.create('/browse', People.find({}).count(), 2, 2),
-             '<a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a>');
+  test.equal(Pagination.create('/browse', People.find({}).count(), 1, 2), '1 of 4 <a href="/browse/2">Next</a>');
+  test.equal(Pagination.create('/browse/', People.find({}).count(), 1, 2), '1 of 4 <a href="/browse/2">Next</a>');
+  test.equal(Pagination.create('/search/browse', People.find({}).count(), 1, 2), '1 of 4 <a href="/search/browse/2">Next</a>');
+  test.equal(Pagination.create('/browse', People.find({}).count(), 2, 4), '<a href="/browse/1">Prev</a> 2 of 2');
+  test.equal(Pagination.create('/browse', People.find({}).count(), 2, 2), '<a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a>');
   test.equal(Pagination.create('/browse', People.find({}).count(), 1, 8), '1 of 1');
 });
 
