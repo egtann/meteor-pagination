@@ -118,7 +118,7 @@ For example, Pagination.style('bootstrap') would change the style. Pagination.st
 
 style: string, either 'one-of-x' or 'bootstrap'. Defaults to 'one-of-x'.
 
-### To be done
+## To be done
 
   - Reactivity
   - Enable infinite scrolling
