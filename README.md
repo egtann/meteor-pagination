@@ -83,6 +83,41 @@ If all goes well, you should see something like this on the page:
 
 If you're on the first page, there's no Previous button. If you're on the last page, there's no next button. If there's only one page, there are no buttons.
 
+## API
+
+#### create
+
+```js
+Pagination.create(prependRoute, collectionCount, currentPage, perPage)
+```
+
+This generates the page numbers and previous/next buttons.
+
+prependRoute: string.
+collectionCount, currentPage, and perPage: integers.
+
+#### totalPages
+
+```js
+Pagination.totalPages(collectionCount, perPage)
+```
+
+Calculates the total number of pages required for your collection given how many you want to display on each page. Use this to build out custom solutions, piggybacking on this package's calculations.
+
+collectionCount and perPage are integers.
+
+#### style
+
+```js
+Pagination.style(style)
+```
+
+Use this to change the style of the outputted HTML from Pagination.create() or to check the current style. Pass in no parameter to return the current style.
+
+For example, Pagination.style('bootstrap') would change the style. Pagination.style() will return the current style.
+
+style: string, either 'one-of-x' or 'bootstrap'. Defaults to 'one-of-x'.
+
 ### To be done
 
   - Reactivity
