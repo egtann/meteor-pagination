@@ -15,7 +15,9 @@ It's smart enough to know when not to include Previous and Next links, to append
 
 ## Styles
 
-There are two styles built in, which you can set using Pagination.style() like so.
+There are two styles built in, which you can set using Pagination.style() like so:
+
+    Pagination.style('bootstrap');
 
   1. 'one-of-x' (default)
 
