@@ -6,40 +6,59 @@ This enables pagination in your Meteor app.
 ### Basics
 
 In the client:
+
 ```js
 Pagination.create(prependRoute, collectionCount, currentPage, resultsPerPage);
 ```
 
-For example, set this in the client:
+It's smart enough to know when not to include Previous and Next links, to append a trailing slash to the prepended route when necessary, and to determine the total number of pages.
+
+### Using this with a router
+
+For demonstration, I'll be hooking this up to [router-with-notifications](https://github.com/egtann/meteor-router), but it should work similarly with any other router.
 
 ```js
-var People = new Meteor.Collection('people');
-for (var i=0; i<8; i++)
-  People.insert({name: 'Jim'});
+if (Meteor.isClient) {
+  Meteor.Router.add({
+    '/browse/:page': function (page) {
+      // We want to get the current page to pass it into Pagination
+      Session.set('page', page);
+      return 'browse';
+    }
+  });
 
-Template.browse.pagination = function () {
-  return Pagination.create('/browse', People.find({}).count(), 2, 2);
+  Template.browse.pagination = function () {
+    // Pagination.create(prependRoute, collectionCount, currentPage, resultsPerPage);
+    return Pagination.create('/browse', People.find({}).count(), Session.get('page'), 8);
+  }
 }
 ```
 
-Using it in the template:
+In the template:
 
 ```js
-{{{pagination}}}
+<template name="browse">
+  {{#each people}}
+    {{> person}}
+  {{/each}}
+
+  {{{pagination}}}
+</template>
 ```
 
-Inserts this into the page:
+Note that pagination is surrounded by three '{{{' brackets. This inserts the page numbers into the page as HTML, rather than as text.
+
+If all goes well, you should see something like this on the page:
 
 ```html
 <a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a>
 ```
 
-It's smart enough to know when not to include Previous and Next links, to append a trailing slash to the prepended route when necessary, and to determine the total number of pages.
+If you're on the first page, there's no Previous button. If you're on the last page, there's no next button. If there's only one page, there are no buttons.
 
 ### To be done
 
   - Reactivity
-  - Document how it integrates with meteor-router
   - Enable infinite scrolling
   - Styling options
   - Handle the actual pagination (more than just the numbers and links!)
