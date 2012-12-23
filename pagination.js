@@ -19,7 +19,6 @@ Pagination.prototype.totalPages = function(collectionCount, perPage) {
     totalPages = collectionCount / perPage - remainder + 1;
   else
     totalPages = collectionCount / perPage
-
   return totalPages;
 }
 
