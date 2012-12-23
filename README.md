@@ -3,7 +3,7 @@ Meteor Pagination
 
 This enables pagination in your Meteor app.
 
-### Basics
+## Basics
 
 In the client:
 
@@ -13,7 +13,32 @@ Pagination.create(prependRoute, collectionCount, currentPage, resultsPerPage);
 
 It's smart enough to know when not to include Previous and Next links, to append a trailing slash to the prepended route when necessary, and to determine the total number of pages.
 
-### Demonstration
+## Styles
+
+There are two styles built in, which you can set using Pagination.style() like so.
+
+  1. 'one-of-x' (default)
+
+    ```html
+    <a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a>
+    ```
+  
+  2. 'bootstrap', [Bootstrap pagination](http://twitter.github.com/bootstrap/components.html#pagination) 
+
+    ```html
+    <div class="pagination">
+      <ul>
+        <li><a href="/browse/1">«</a></li>
+        <li><a href="/browse/1">1</a></li>
+        <li><a href="/browse/2" class="active">2</a></li>
+        <li><a href="/browse/3">3</a></li>
+        <li><a href="/browse/4">4</a></li>
+        <li><a href="/browse/3">»</a></li>
+      </ul>
+    </div>
+    ``` 
+
+## Demonstration
 
 I'll be hooking this up to [router-with-notifications](https://github.com/egtann/meteor-router) to keep track of the current page, but it should work similarly with any other router.
 
@@ -60,5 +85,4 @@ If you're on the first page, there's no Previous button. If you're on the last p
 
   - Reactivity
   - Enable infinite scrolling
-  - Styling options
   - Handle the actual pagination (more than just the numbers and links!)

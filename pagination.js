@@ -1,4 +1,6 @@
-var Pagination = function() {}
+var Pagination = function() {
+  var _style = 'one-of-x';
+}
 
 Pagination.prototype.create = function(prependRoute, collectionCount, currentPage, perPage) {
   var self = this;
@@ -22,6 +24,13 @@ Pagination.prototype.totalPages = function(collectionCount, perPage) {
   return totalPages;
 }
 
+Pagination.prototype.style = function(style) {
+  if (style)
+    return this._style = style;
+  else
+    return this._style;
+}
+
 // Internal, don't use
 Pagination.prototype._checkVars = function(currentPage, totalPages) {
   if (totalPages <= 0 || currentPage <= 0 || !currentPage || !totalPages)
@@ -39,23 +48,57 @@ Pagination.prototype._createHTML = function(prependRoute, currentPage, totalPage
   if (!trailingSlash.test(prependRoute))
     prependRoute += '/';
 
+  var prevPage = parseInt(currentPage) - 1;
+  var nextPage = parseInt(currentPage) + 1;
+  if (this._style === 'bootstrap')
+    return this._bootstrap(prependRoute, currentPage, totalPages, prevPage, nextPage, html);
+  else
+    return this._oneOfX(prependRoute, currentPage, totalPages, prevPage, nextPage, html);
+}
+
+// Style 'one-of-x'
+Pagination.prototype._oneOfX = function(prependRoute, currentPage, totalPages, prevPage, nextPage, html) {
+  html += '<div class="pagination">';
   if (totalPages !== 1) {
     if (currentPage > 1) {
       // Previous button
-      var prevPage = parseInt(currentPage) - 1;
       html += '<a href="' + prependRoute + prevPage + '">Prev</a> ';
     }
     // Main section
     html += currentPage + ' of ' + totalPages;
     if (currentPage < totalPages) {
       // Next button
-      var nextPage = parseInt(currentPage) + 1;
       html += ' <a href="' + prependRoute + nextPage + '">Next</a>';
     }
   } else {
     // No buttons
     html += currentPage + ' of ' + totalPages;
   }
+  html += '</div>';
+  return html;
+}
+
+// Style 'bootstrap'
+Pagination.prototype._bootstrap = function(prependRoute, currentPage, totalPages, prevPage, nextPage, html) {
+  html += '<div class="pagination">';
+  html += '<ul>';
+  if (totalPages !== 1) {
+    if (currentPage > 1) {
+      html += '<li><a href="' + prependRoute + prevPage + '">«</a></li>';
+    }
+    for (var i = currentPage - 1; (i <= totalPages) && (i - currentPage < 4); i++) {
+      if (i < 1) continue;
+      if (i == currentPage)
+        html += '<li><a href="' + prependRoute + i + '" class="active">' + i + '</a></li>';
+      else
+        html += '<li><a href="' + prependRoute + i + '">' + i + '</a></li>';
+    }
+    if (currentPage < totalPages) {
+      html += '<li><a href="' + prependRoute + nextPage + '">»</a></li>';
+    }
+  }
+  html += '</ul>';
+  html += '</div>';
   return html;
 }
 
