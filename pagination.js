@@ -1,14 +1,26 @@
 var Pagination = function() {}
 
-Pagination.prototype.create = function(prependRoute, currentPage, totalPages) {
+Pagination.prototype.create = function(prependRoute, collectionCount, currentPage, perPage) {
   var self = this;
 
   prependRoute = prependRoute.toString();
   currentPage = parseInt(currentPage);
-  totalPages = parseInt(totalPages);
+  totalPages = self.totalPages(collectionCount, perPage);
 
   if (self._checkVars(currentPage, totalPages))
     return self._createHTML(prependRoute, currentPage, totalPages);
+}
+
+Pagination.prototype.totalPages = function(collectionCount, perPage) {
+  var totalPages, remainder;
+
+  remainder = collectionCount / perPage % 1
+  if (remainder !== 0)
+    totalPages = collectionCount / perPage - remainder + 1;
+  else
+    totalPages = collectionCount / perPage
+
+  return totalPages;
 }
 
 // Internal, don't use
@@ -28,21 +40,21 @@ Pagination.prototype._createHTML = function(prependRoute, currentPage, totalPage
   if (!trailingSlash.test(prependRoute))
     prependRoute += '/';
 
-  // No buttons
   if (totalPages !== 1) {
-    // Previous button
     if (currentPage > 1) {
+      // Previous button
       var prevPage = parseInt(currentPage) - 1;
       html += '<a href="' + prependRoute + prevPage + '">Prev</a> ';
     }
     // Main section
     html += currentPage + ' of ' + totalPages;
-    // Next button
     if (currentPage < totalPages) {
+      // Next button
       var nextPage = parseInt(currentPage) + 1;
       html += ' <a href="' + prependRoute + nextPage + '">Next</a>';
     }
   } else {
+    // No buttons
     html += currentPage + ' of ' + totalPages;
   }
   return html;

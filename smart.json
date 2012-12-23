@@ -1,9 +1,9 @@
 {
   "name": "pagination",
-  "description": "Paginate anything in just a few lines of code",
+  "description": "Paginate collections in just a few lines of code",
   "homepage": "https://github.com/egtann/meteor-pagination",
   "author": "Evan Tann",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "git": "https://github.com/egtann/meteor-pagination.git",
   "packages": {}
 }
