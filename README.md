@@ -11,6 +11,12 @@ In the client:
 Pagination.create(prependRoute, collectionCount, currentPage, resultsPerPage);
 ```
 
+Pagination.create() returns something like this:
+
+```html
+<div class="pagination"><a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a></div>
+```
+
 It's smart enough to know when not to include Previous and Next links, to append a trailing slash to the prepended route when necessary, and to determine the total number of pages.
 
 ## Styles
@@ -22,10 +28,10 @@ There are two styles built in, which you can set using Pagination.style() like s
   1. 'one-of-x' (default)
 
     ```html
-    <a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a>
+    <div class="pagination"><a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a></div>
     ```
   
-  2. 'bootstrap', [Bootstrap pagination](http://twitter.github.com/bootstrap/components.html#pagination) 
+  2. 'bootstrap', to work with [Bootstrap pagination](http://twitter.github.com/bootstrap/components.html#pagination) 
 
     ```html
     <div class="pagination">
@@ -78,7 +84,7 @@ Note that pagination is surrounded by three '{{{' brackets. This inserts the pag
 If all goes well, you should see something like this on the page:
 
 ```html
-<a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a>
+<div class="pagination"><a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a></div>
 ```
 
 If you're on the first page, there's no Previous button. If you're on the last page, there's no next button. If there's only one page, there are no buttons.
