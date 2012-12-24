@@ -169,6 +169,7 @@ For example, Pagination.style('bootstrap') would change the style. Pagination.st
 
 style: string, either 'one-of-x' or 'bootstrap'. Defaults to 'one-of-x'.
 
+<<<<<<< HEAD
 #### currentPage
 
 ```js
@@ -184,6 +185,9 @@ Pagination.perPage(15); // Set perPage
 ```
 
 ### To be done
+=======
+## To be done
+>>>>>>> 203cf2d... Update Readme
 
   - Reactivity
   - Enable infinite scrolling
