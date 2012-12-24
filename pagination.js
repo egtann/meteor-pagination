@@ -1,27 +1,47 @@
 var Pagination = function() {
   var _style = 'one-of-x';
+  var _currentPage = 1;
+  var _perPage = 10;
 }
 
-Pagination.prototype.create = function(prependRoute, collectionCount, currentPage, perPage) {
+// Accessible functions
+Pagination.prototype.links = function(prependRoute, cursorCount, options) {
   var self = this;
 
   prependRoute = prependRoute.toString();
-  currentPage = parseInt(currentPage);
-  totalPages = self.totalPages(collectionCount, perPage);
+  self._setOptions(options);
+  var totalPages = self.totalPages(cursorCount, self.perPage());
 
-  if (self._checkVars(currentPage, totalPages))
-    return self._createHTML(prependRoute, currentPage, totalPages);
+  if (self._checkVars(self.currentPage(), totalPages))
+    return self._createHTML(prependRoute, self.currentPage(), totalPages);
 }
 
-Pagination.prototype.totalPages = function(collectionCount, perPage) {
+Pagination.prototype.collection = function(cursor, options) {
+  this._setOptions(options);
+  var perPage = this.perPage();
+  var currentPage = this.currentPage();
+
+  return cursor.slice((currentPage - 1) * perPage, currentPage * perPage);
+}
+
+Pagination.prototype.totalPages = function(cursorCount, perPage) {
   var totalPages, remainder;
 
-  remainder = collectionCount / perPage % 1
+  remainder = cursorCount / perPage % 1
   if (remainder !== 0)
-    totalPages = collectionCount / perPage - remainder + 1;
+    totalPages = cursorCount / perPage - remainder + 1;
   else
-    totalPages = collectionCount / perPage
+    totalPages = cursorCount / perPage
   return totalPages;
+}
+
+// Getter and setter functions
+Pagination.prototype._setOptions = function(options) {
+  if (options) {
+    this.currentPage(options.currentPage);
+    this.perPage(options.perPage);
+    this.style(options.style);
+  }
 }
 
 Pagination.prototype.style = function(style) {
@@ -29,6 +49,20 @@ Pagination.prototype.style = function(style) {
     return this._style = style;
   else
     return this._style;
+}
+
+Pagination.prototype.currentPage = function(currentPage) {
+  if (currentPage)
+    return this._currentPage = currentPage;
+  else
+    return this._currentPage;
+}
+
+Pagination.prototype.perPage = function(perPage) {
+  if (perPage)
+    return this._perPage = perPage;
+  else
+    return this._perPage;
 }
 
 // Internal, don't use
@@ -40,7 +74,6 @@ Pagination.prototype._checkVars = function(currentPage, totalPages) {
   return true;
 }
 
-// Internal, don't use
 Pagination.prototype._createHTML = function(prependRoute, currentPage, totalPages) {
   var html = '';
 
@@ -61,13 +94,10 @@ Pagination.prototype._oneOfX = function(prependRoute, currentPage, totalPages, p
   html += '<div class="pagination">';
   if (totalPages !== 1) {
     if (currentPage > 1) {
-      // Previous button
       html += '<a href="' + prependRoute + prevPage + '">Prev</a> ';
     }
-    // Main section
     html += currentPage + ' of ' + totalPages;
     if (currentPage < totalPages) {
-      // Next button
       html += ' <a href="' + prependRoute + nextPage + '">Next</a>';
     }
   } else {
@@ -88,10 +118,10 @@ Pagination.prototype._bootstrap = function(prependRoute, currentPage, totalPages
     }
     for (var i = currentPage - 1; (i <= totalPages) && (i - currentPage < 4); i++) {
       if (i < 1) continue;
-      if (i == currentPage)
-        html += '<li><a href="' + prependRoute + i + '" class="active">' + i + '</a></li>';
-      else
+      if (i !== currentPage)
         html += '<li><a href="' + prependRoute + i + '">' + i + '</a></li>';
+      else
+        html += '<li><a href="' + prependRoute + i + '" class="active">' + i + '</a></li>';
     }
     if (currentPage < totalPages) {
       html += '<li><a href="' + prependRoute + nextPage + '">»</a></li>';

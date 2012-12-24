@@ -1,14 +1,41 @@
-Tinytest.add("Prev and Next Links", function(test) {
-  test.equal(Pagination.create('/browse', People.find({}).count(), 1, 2), '<div class="pagination">1 of 4 <a href="/browse/2">Next</a></div>');
-  test.equal(Pagination.create('/browse/', People.find({}).count(), 1, 2), '<div class="pagination">1 of 4 <a href="/browse/2">Next</a></div>');
-  test.equal(Pagination.create('/search/browse', People.find({}).count(), 1, 2), '<div class="pagination">1 of 4 <a href="/search/browse/2">Next</a></div>');
-  test.equal(Pagination.create('/browse', People.find({}).count(), 2, 4), '<div class="pagination"><a href="/browse/1">Prev</a> 2 of 2</div>');
-  test.equal(Pagination.create('/browse', People.find({}).count(), 2, 2), '<div class="pagination"><a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a></div>');
-  test.equal(Pagination.create('/browse', People.find({}).count(), 1, 8), '<div class="pagination">1 of 1</div>');
+Tinytest.add("Generate page links", function(test) {
+  test.equal(Pagination.links('/browse', People.find({}).count(), {currentPage: 1, perPage: 2}),
+            '<div class="pagination">' +
+              '1 of 4 <a href="/browse/2">Next</a>' +
+            '</div>');
+  test.equal(Pagination.links('/browse/', People.find({}).count(), {currentPage: 1, perPage: 2}),
+            '<div class="pagination">' +
+              '1 of 4 <a href="/browse/2">Next</a>' + 
+            '</div>');
+  test.equal(Pagination.links('/search/browse', People.find({}).count(), {currentPage: 1, perPage: 2}),
+            '<div class="pagination">' +
+              '1 of 4 <a href="/search/browse/2">Next</a>' +
+            '</div>');
+  test.equal(Pagination.links('/browse', People.find({}).count(), {currentPage: 2, perPage: 4}),
+            '<div class="pagination">' +
+              '<a href="/browse/1">Prev</a> 2 of 2' +
+            '</div>');
+  test.equal(Pagination.links('/browse', People.find({}).count(), {currentPage: 2, perPage: 2}),
+            '<div class="pagination">' +
+              '<a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a>' +
+            '</div>');
+  test.equal(Pagination.links('/browse', People.find({}).count(), {currentPage: 1, perPage: 8}),
+            '<div class="pagination">' +
+              '1 of 1' +
+            '</div>');
+  test.equal(Pagination.links('/browse', People.find({}).count()),
+            '<div class="pagination">' +
+              '1 of 1' +
+            '</div>');
+});
+
+Tinytest.add("Paginate collection", function(test) {
+  test.equal(Pagination.collection(People.find({}), {currentPage: 1, perPage: 2}), People._collection.docs.slice(0, 2));
+  test.equal(Pagination.collection(People.find({}), {currentPage: 2, perPage: 6}), People._collection.docs.slice(6, 12));
 });
 
 Tinytest.add("Total pages", function(test) {
-  // Pagination.totalPages(prepended route, collection, number per page)
+  // Pagination.totalPages(cursor, perPage)
   test.equal(Pagination.totalPages(People.find({}).count(), 4), 2);
   test.equal(Pagination.totalPages(People.find({}).count(), 3), 3);
   test.equal(Pagination.totalPages(People.find({}).count(), 1), 8);
@@ -17,10 +44,12 @@ Tinytest.add("Total pages", function(test) {
 
 Tinytest.add("Styles", function(test) {
   Pagination.style('one-of-x');
-  test.equal(Pagination.create('/browse', People.find({}).count(), 1, 2), '<div class="pagination">1 of 4 <a href="/browse/2">Next</a></div>');
+  test.equal(Pagination.links('/browse', People.find({}).count(), {currentPage: 1, perPage: 2}),
+    '<div class="pagination">' +
+      '1 of 4 <a href="/browse/2">Next</a>' +
+    '</div>');
 
-  Pagination.style('bootstrap');
-  test.equal(Pagination.create('/browse', People.find({}).count(), 1, 2),
+  test.equal(Pagination.links('/browse', People.find({}).count(), {currentPage: 1, perPage: 2, style: 'bootstrap'}),
     '<div class="pagination">' +
       '<ul>' +
         '<li><a href="/browse/1" class="active">1</a></li>' +
@@ -32,7 +61,7 @@ Tinytest.add("Styles", function(test) {
     '</div>'
   );
 
-  test.equal(Pagination.create('/browse', People.find({}).count(), 2, 1),
+  test.equal(Pagination.links('/browse', People.find({}).count(), {currentPage: 2, perPage: 1, style: 'bootstrap'}),
     '<div class="pagination">' +
       '<ul>' +
         '<li><a href="/browse/1">«</a></li>' +
@@ -46,7 +75,7 @@ Tinytest.add("Styles", function(test) {
     '</div>'
   );
 
-  test.equal(Pagination.create('/browse', People.find({}).count(), 4, 1),
+  test.equal(Pagination.links('/browse', People.find({}).count(), {currentPage: 4, perPage: 1, style: 'bootstrap'}),
     '<div class="pagination">' +
       '<ul>' +
         '<li><a href="/browse/3">«</a></li>' +
@@ -78,6 +107,10 @@ Collection.prototype.find = function(hash) {
 
 Collection.prototype.count = function() {
   return this._collection.docs.length;
+}
+
+Collection.prototype.slice = function(start, end) {
+  return this._collection.docs.slice(start, end);
 }
 
 // Set up the fake People collection
