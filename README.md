@@ -14,7 +14,9 @@ Pagination.create(prependRoute, collectionCount, currentPage, resultsPerPage);
 Pagination.create() returns something like this:
 
 ```html
-<div class="pagination"><a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a></div>
+<div class="pagination">
+    <a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a>
+</div>
 ```
 
 It's smart enough to know when not to include Previous and Next links, to append a trailing slash to the prepended route when necessary, and to determine the total number of pages.
