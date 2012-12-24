@@ -14,7 +14,7 @@ Displaying only the current page's cursor results is easy. In the client, use Pa
 Pagination.collection(cursor, options);
 ```
 
-It's important to note that cursor is actually the returned values of collection.find(). So if you have a collection named People, you might use Pagination.collection() like this:
+It's important to note that cursor is actually the returned values of Meteor.Collection.find(). So if you have a collection named People, you might use Pagination.collection() like this:
 
 ```js
 Pagination.collection(People.find({}), options);
@@ -141,7 +141,7 @@ If you're on the first page, there's no Previous button. If you're on the last p
 Pagination.collection(cursor, options)
 ```
 
-Cursor is the result of running collection.find().
+Cursor is the result of running Meteor.Collection.find().
 
 #### links 
 
