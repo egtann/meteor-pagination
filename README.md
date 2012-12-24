@@ -3,7 +3,7 @@ Meteor Pagination
 
 This enables simple pagination in your Meteor app. There are two key parts:
 
-  1. Limiting cursor results to only what should be displayed on the current page.
+  1. Limiting cursor results to only what should be displayed on the current page. **bugged right now, give me til after Christmas**
   2. Displaying page links at the bottom, the format of which can be modified using styles.
 
 ## Basics
