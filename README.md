@@ -17,7 +17,7 @@ Pagination.collection(cursor, options);
 It's important to note that cursor is actually the returned values of Meteor.Collection.find(). So if you have a collection named People, you might use Pagination.collection() like this:
 
 ```js
-Pagination.collection(People.find({}), options);
+Pagination.collection(People.find({}).fetch(), options);
 ```
 
 To display page links on the page (typically at the bottom), use Pagination.links() in the client like so:
