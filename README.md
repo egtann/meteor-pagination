@@ -14,16 +14,24 @@ Displaying only the current page's cursor results is easy. In the client, use Pa
 Pagination.collection(cursor, options);
 ```
 
-It's important to note that cursor is actually the returned values of collection.find(). So if you have a collection named People, you might use Pagination.collection() like this:
+It's important to note that cursor is actually the returned values of Meteor.Collection.find(). So if you have a collection named People, you might use Pagination.collection() like this:
 
 ```js
-Pagination.collection(People.find({}), options);
+Pagination.collection(People.find({}).fetch(), options);
 ```
 
 To display page links on the page (typically at the bottom), use Pagination.links() in the client like so:
 
 ```js
 Pagination.links(prependRoute, cursorCount, options);
+```
+
+Pagination.create() returns something like this:
+
+```html
+<div class="pagination">
+    <a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a>
+</div>
 ```
 
 It's smart enough to know when not to include Previous and Next links, to append a trailing slash to the prepended route when necessary, and to determine the total number of pages.
@@ -60,10 +68,10 @@ There are two styles built in, which you can set using Pagination.style() like s
   1. 'one-of-x' (default)
 
     ```html
-    <a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a>
+    <div class="pagination"><a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a></div>
     ```
   
-  2. 'bootstrap', [Bootstrap pagination](http://twitter.github.com/bootstrap/components.html#pagination) 
+  2. 'bootstrap', to work with [Bootstrap pagination](http://twitter.github.com/bootstrap/components.html#pagination) 
 
     ```html
     <div class="pagination">
@@ -93,7 +101,7 @@ if (Meteor.isClient) {
   });
 
   Template.browse.results = function () {
-    return Pagination.collection(People.find({}));
+    return Pagination.collection(People.find({}).fetch());
   }
 
   Template.browse.paginationLinks = function () {
@@ -120,7 +128,7 @@ Note that pagination is surrounded by three '{{{' brackets. This inserts the pag
 If all goes well, you should see something like this on the page:
 
 ```html
-<a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a>
+<div class="pagination"><a href="/browse/1">Prev</a> 2 of 4 <a href="/browse/3">Next</a></div>
 ```
 
 If you're on the first page, there's no Previous button. If you're on the last page, there's no next button. If there's only one page, there are no buttons.
@@ -133,7 +141,7 @@ If you're on the first page, there's no Previous button. If you're on the last p
 Pagination.collection(cursor, options)
 ```
 
-Cursor is the result of running collection.find().
+Cursor is the result of running Meteor.Collection.find().
 
 #### links 
 
@@ -169,7 +177,6 @@ For example, Pagination.style('bootstrap') would change the style. Pagination.st
 
 style: string, either 'one-of-x' or 'bootstrap'. Defaults to 'one-of-x'.
 
-<<<<<<< HEAD
 #### currentPage
 
 ```js
@@ -184,10 +191,7 @@ Pagination.perPage(); // Get perPage
 Pagination.perPage(15); // Set perPage
 ```
 
-### To be done
-=======
 ## To be done
->>>>>>> 203cf2d... Update Readme
 
   - Reactivity
   - Enable infinite scrolling

@@ -30,8 +30,8 @@ Tinytest.add("Generate page links", function(test) {
 });
 
 Tinytest.add("Paginate collection", function(test) {
-  test.equal(Pagination.collection(People.find({}), {currentPage: 1, perPage: 2}), People._collection.docs.slice(0, 2));
-  test.equal(Pagination.collection(People.find({}), {currentPage: 2, perPage: 6}), People._collection.docs.slice(6, 12));
+  test.equal(Pagination.collection(People.find({}).fetch(), {currentPage: 1, perPage: 2}), People.collection.docs.slice(0, 2));
+  test.equal(Pagination.collection(People.find({}).fetch(), {currentPage: 2, perPage: 6}), People.collection.docs.slice(6, 12));
 });
 
 Tinytest.add("Total pages", function(test) {
@@ -93,11 +93,11 @@ Tinytest.add("Styles", function(test) {
 // Prepare a bare bones collection mock for testing
 var Collection = function(name) {
   this.name = name;
-  this._collection = {docs: []};
+  this.collection = {docs: []};
 }
 
 Collection.prototype.insert = function(hash) {
-  this._collection.docs.push(hash);
+  this.collection.docs.push(hash);
   return this;
 }
 
@@ -105,12 +105,16 @@ Collection.prototype.find = function(hash) {
   return this;
 }
 
+Collection.prototype.fetch = function() {
+  return this;
+}
+
 Collection.prototype.count = function() {
-  return this._collection.docs.length;
+  return this.collection.docs.length;
 }
 
 Collection.prototype.slice = function(start, end) {
-  return this._collection.docs.slice(start, end);
+  return this.collection.docs.slice(start, end);
 }
 
 // Set up the fake People collection
