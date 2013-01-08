@@ -104,7 +104,7 @@ if (Meteor.isClient) {
     return Pagination.collection(People.find({}).fetch());
   }
 
-  Template.browse.paginationLinks = function () {
+  Template.browse.pagination = function () {
     // Pagination.links(prependRoute, cursorCount, options);
     return Pagination.links('/browse', People.find({}).count(), {currentPage: Session.get('page'), perPage: 8});
   }
