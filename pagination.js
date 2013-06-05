@@ -121,7 +121,7 @@ Pagination.prototype._bootstrap = function(prependRoute, currentPage, totalPages
       if (i !== currentPage)
         html += '<li><a href="' + prependRoute + i + '">' + i + '</a></li>';
       else
-        html += '<li><a href="' + prependRoute + i + '" class="active">' + i + '</a></li>';
+        html += '<li class="active"><a href="' + prependRoute + i + '">' + i + '</a></li>';
     }
     if (currentPage < totalPages) {
       html += '<li><a href="' + prependRoute + nextPage + '">»</a></li>';
