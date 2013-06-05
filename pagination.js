@@ -132,4 +132,4 @@ Pagination.prototype._bootstrap = function(prependRoute, currentPage, totalPages
   return html;
 }
 
-var Pagination = new Pagination();
+Pagination = new Pagination();
