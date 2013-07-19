@@ -1,4 +1,3 @@
-(function(root) {
 var Pagination = function() {
   var _style = 'one-of-x';
   var _currentPage = 1;
@@ -133,6 +132,4 @@ Pagination.prototype._bootstrap = function(prependRoute, currentPage, totalPages
   return html;
 }
 
-root.Pagination = new Pagination();
-
-})(this);
+this.Pagination = new Pagination();
