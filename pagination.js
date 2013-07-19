@@ -1,4 +1,4 @@
-var Pagination = function() {
+Pagination = function() {
   var _style = 'one-of-x';
   var _currentPage = 1;
   var _perPage = 10;

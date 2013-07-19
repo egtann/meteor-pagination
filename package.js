@@ -7,5 +7,6 @@ Package.on_use(function (api, where) {
 });
 
 Package.on_test(function (api) {
+  api.use(['pagination', 'tinytest', 'test-helpers'], 'client');
   api.add_files('pagination_tests.js', 'client');
 });

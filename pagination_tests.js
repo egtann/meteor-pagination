@@ -52,7 +52,7 @@ Tinytest.add("Styles", function(test) {
   test.equal(Pagination.links('/browse', People.find({}).count(), {currentPage: 1, perPage: 2, style: 'bootstrap'}),
     '<div class="pagination">' +
       '<ul>' +
-        '<li><a href="/browse/1" class="active">1</a></li>' +
+        '<li class="active"><a href="/browse/1">1</a></li>' +
         '<li><a href="/browse/2">2</a></li>' +
         '<li><a href="/browse/3">3</a></li>' +
         '<li><a href="/browse/4">4</a></li>' +
@@ -66,7 +66,7 @@ Tinytest.add("Styles", function(test) {
       '<ul>' +
         '<li><a href="/browse/1">«</a></li>' +
         '<li><a href="/browse/1">1</a></li>' +
-        '<li><a href="/browse/2" class="active">2</a></li>' +
+        '<li class="active"><a href="/browse/2">2</a></li>' +
         '<li><a href="/browse/3">3</a></li>' +
         '<li><a href="/browse/4">4</a></li>' +
         '<li><a href="/browse/5">5</a></li>' +
@@ -80,7 +80,7 @@ Tinytest.add("Styles", function(test) {
       '<ul>' +
         '<li><a href="/browse/3">«</a></li>' +
         '<li><a href="/browse/3">3</a></li>' +
-        '<li><a href="/browse/4" class="active">4</a></li>' +
+        '<li class="active"><a href="/browse/4">4</a></li>' +
         '<li><a href="/browse/5">5</a></li>' +
         '<li><a href="/browse/6">6</a></li>' +
         '<li><a href="/browse/7">7</a></li>' +
