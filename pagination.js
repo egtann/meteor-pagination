@@ -110,8 +110,7 @@ Pagination.prototype._oneOfX = function(prependRoute, currentPage, totalPages, p
 
 // Style 'bootstrap'
 Pagination.prototype._bootstrap = function(prependRoute, currentPage, totalPages, prevPage, nextPage, html) {
-  html += '<div class="pagination">';
-  html += '<ul>';
+  html += '<div class="pagination-cont"><ul class="pagination">';
   if (totalPages !== 1) {
     if (currentPage > 1) {
       html += '<li><a href="' + prependRoute + prevPage + '">«</a></li>';
@@ -127,8 +126,7 @@ Pagination.prototype._bootstrap = function(prependRoute, currentPage, totalPages
       html += '<li><a href="' + prependRoute + nextPage + '">»</a></li>';
     }
   }
-  html += '</ul>';
-  html += '</div>';
+  html += '</ul></div>';
   return html;
 }
 
